@@ -33,6 +33,8 @@ public class Loan {
 	@JoinColumn(name = "CustomerId")
 	private Customer customer;
 	@ManyToOne
-	@JoinColumn(name = "Id")
+	@JoinColumn(name = "managerId")
 	private Officer officer;
 }
+
+//findByCustomer() and pass customer objevct
