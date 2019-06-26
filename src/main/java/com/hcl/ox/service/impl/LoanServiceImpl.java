@@ -1,7 +1,6 @@
 package com.hcl.ox.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +29,18 @@ public class LoanServiceImpl implements ILoanService {
 
 	@Override
 	public String deleteByStatus( long managerId) {
-		
-		String msg;
-	loanRepository.findBymanagerId(managerId);
-	
-		msg="Record deleted successfull ";
-		
+		String msg = null;
+		try {
+			List<Loan> loanList = loanRepository.findByManagerIdAndStatus(managerId, "rejected");
+			if(!loanList.isEmpty()) {
+				loanRepository.deleteAll(loanList);
+				msg = "deleted successfully";
+			} else {
+				msg = "No records with Rejected status";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	return msg;
 	
 	}

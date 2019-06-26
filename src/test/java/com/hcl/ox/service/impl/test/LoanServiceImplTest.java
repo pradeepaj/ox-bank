@@ -45,9 +45,21 @@ public class LoanServiceImplTest {
 		Loan loan = new Loan(23L, "Nepal", 4588, "Pending", 6790, custome, officer);
 		List<Loan> loanList = new ArrayList<>();
 		loanList.add(loan);
-		when(loanRepository.findAllByStatus(Mockito.anyString())).thenReturn(loanList);
-		List<Loan> actualList =loanServiceImpl.findAllByStatus("pending");
+		when(loanRepository.findByLoanStatus(Mockito.anyString())).thenReturn(loanList);
+		List<Loan> actualList =loanServiceImpl.findByLoanStatus("pending");
 		assertEquals(loanList.get(0).getCustomer(), actualList.get(0).getCustomer());
+	}
+	
+	@Test
+	public void testDeleteByStatus() {
+		List<Loan> loanList = new ArrayList<Loan>();
+		Customer custome = new Customer();
+		Officer officer = new Officer();
+		Loan loan = new Loan(23L, "Nepal", 4588, "Pending", 6790, custome, officer);
+		loanList.add(loan);
+		when(loanRepository.findByManagerIdAndStatus(officer.getId(), "rejected")).thenReturn(loanList);
+		String msg = loanServiceImpl.deleteByStatus(officer.getId());
+		assertEquals("deleted successfully",msg);
 	}
 
 }

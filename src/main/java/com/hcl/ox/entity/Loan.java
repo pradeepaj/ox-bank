@@ -32,6 +32,7 @@ public class Loan {
 	@OneToOne
 	@JoinColumn(name = "CustomerId")
 	private Customer customer;
+	
 	@ManyToOne
 	@JoinColumn(name = "managerId")
 	private Officer officer;
